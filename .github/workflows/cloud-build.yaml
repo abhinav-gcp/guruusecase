@@ -1,0 +1,23 @@
+name: Cloud Build
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Login to Google Cloud
+        uses: google-github-actions/login@v1
+        with:
+          credentials: ${{ secrets.GCP_CREDENTIALS }}
+      - name: Build and deploy Apache image
+        run: |
+          cd apache
+          gcloud builds submit --config cloudbuild.yaml .
+      - name: Build and deploy Tomcat image
+        run: |
+          cd tomcat
+          gcloud builds submit --config cloudbuild.yaml .
