@@ -1,10 +1,12 @@
-# cloudbuild-tomcat.yaml
 steps:
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'us-south1-docker.pkg.dev/amplified-asset-426508-e7/myrepo7/tomcat-image:$COMMIT_SHA', 'tomcat/.']
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'us-south1-docker.pkg.dev/amplified-asset-426508-e7/myrepo7/tomcat-image:$COMMIT_SHA']
-images:
-- 'us-south1-docker.pkg.dev/amplified-asset-426508-e7/myrepo7/tomcat-image:$COMMIT_SHA'
-
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'us-south1-docker.pkg.dev/amplified-asset-426508-e7/myrepo7/tomcat-image:latest'
+      - './tomcat/'  # Path to the directory containing Dockerfile
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'us-south1-docker.pkg.dev/amplified-asset-426508-e7/myrepo7/tomcat-image:latest'
 
